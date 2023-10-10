@@ -2,19 +2,23 @@
 
 **Use natural language to query a library of previosuly cited legal cases**
 
-We make use of LangChain for:
+We make use of LangChain modeuls:
 
-- managing the Vector Store: Cassandra
-- managing the embeddings: OpenAIEmbeddings
-- loading data from web pages
-- FLARE chain
+- Document Loaders: WebBaseLoader
+- Text Splitter: TokenTextSplitter
+- Vector Store: Cassandra
+- Models: OpenAIEmbeddings and ChatOpenAI
+- Chain: FLARE
+
+We will be using the Australasian Legal Information Institute as our source legislation and court judgments ("case law").
 
 
 ### Content
 
 In this Github repo, there is
-- a Jupyter notebook that you can use to run the end to end process.
-- a FastAPI app that includes a GUI for better demoing.
+- a Jupyter notebook - lawchat.ipynb - that you can use to run the end to end process.
+- a FastAPI app - main.py - that includes a GUI for better demoing.
+    `uvicorn main:app`
 
 
 ### Problems

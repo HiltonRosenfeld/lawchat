@@ -2,25 +2,29 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 from cassandra.cqlengine import connection
 
-from config import Settings
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-# load settings adn keys
-settings = Settings
+ASTRA_DB_KEYSPACE = os.environ['ASTRA_DB_KEYSPACE']
+ASTRA_DB_SECURE_BUNDLE_PATH = os.environ['ASTRA_DB_SECURE_BUNDLE_PATH']
+ASTRA_DB_APPLICATION_TOKEN = os.environ['ASTRA_DB_APPLICATION_TOKEN']
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
 
 
 def getCluster():
     # Create a Cluster instance to connect to Astra DB.
     # Uses the secure-connect-bundle and the connection secrets.
-    cloud_config = {"secure_connect_bundle": settings.ASTRA_DB_SECURE_BUNDLE_PATH}
-    auth_provider = PlainTextAuthProvider("token", settings.ASTRA_DB_APPLICATION_TOKEN)
+    cloud_config = {"secure_connect_bundle": ASTRA_DB_SECURE_BUNDLE_PATH}
+    auth_provider = PlainTextAuthProvider("token", ASTRA_DB_APPLICATION_TOKEN)
     return Cluster(cloud=cloud_config, auth_provider=auth_provider)
 
 
 def get_astra():
     cluster = getCluster()
     astraSession = cluster.connect()
-    return astraSession, settings.ASTRA_DB_KEYSPACE
+    return astraSession, ASTRA_DB_KEYSPACE
 
 
 def initSession():

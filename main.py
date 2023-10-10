@@ -42,7 +42,7 @@ async def lifespan(app: FastAPI):
         keyspace=keyspace,
         table_name="nswsc",
     )
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 1})
     #retriever = vectorstore.as_retriever()
 
     # define Flare chain
@@ -158,7 +158,7 @@ def showForm(text,opts):
     vl = "checked" if opts=="vl" else ""
     m = f"""
         <div class="userinput">
-        <h1>Query our catalogue using natural language</h1>
+        <h1>Query the law library using natural language</h1>
         <form method="POST" action="/lawchat">
             <input type="text" name="text" value="{text}" size="100">
             <input type="hidden" name="opts" value="v">
